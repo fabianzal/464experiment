@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Date Entry Experiment</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <h1>Date Entry Experiment</h1>
+
+  <div class="mode-select">
+    <button onclick="switchMode('manual')">Manual</button>
+    <button onclick="switchMode('calendar')">Calendar</button>
+    <button onclick="switchMode('hybrid')">Hybrid</button>
+  </div>
+
+  <p id="progress"></p>
+  <div id="experiment"></div>
+  <p id="message"></p>
+
+  <script src="app.js"></script>
+</body>
+</html>
