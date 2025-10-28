@@ -3,6 +3,12 @@ let currentDate = 1;
 const totalDates = 20;
 let startTime;
 
+let participantId = prompt("Enter your Participant ID (e.g., P01):");
+if (!participantId) {
+  participantId = "P00"; // fallback in case user skips
+}
+
+
 function switchMode(selectedMode) {
   mode = selectedMode;
   currentDate = 1;
@@ -15,7 +21,7 @@ function renderInput() {
   const container = document.getElementById('experiment');
   const progress = document.getElementById('progress');
   progress.innerText = `Entry ${currentDate} of ${totalDates}`;
-  
+
   let html = '';
   if (mode === 'manual') {
     html = `
@@ -54,7 +60,7 @@ function logResult(method, value) {
   fetch("http://localhost:5000/api/log", {
     method: "POST",
     headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({ method, value, timeTaken })
+    body: JSON.stringify({ participant_id: participantId, method, value, timeTaken })
   });
 
   currentDate++;
