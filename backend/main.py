@@ -6,12 +6,12 @@ from datetime import datetime
 
 app = FastAPI()
 
-# Allow all origins for local testing
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "http://localhost:8000",
-        "http://127.0.0.1:8000"
+        "http://localhost:5500",
+        "http://127.0.0.1:5500"
     ],
     allow_credentials=True,
     allow_methods=["*"],
@@ -22,8 +22,8 @@ DATA_FILE = "data/experiment_data.csv"
 os.makedirs("data", exist_ok=True)
 
 
-# --- Expected dates for each trial ---
-# We'll assume each participant must enter these 20 dates.
+
+# Change to what we want to have them enter
 EXPECTED_DATES = [
     "2025-01-15", "2025-02-20", "2025-03-10", "2025-03-25", "2025-04-12",
     "2025-05-05", "2025-06-01", "2025-07-04", "2025-08-18", "2025-09-09",
@@ -35,21 +35,21 @@ EXPECTED_DATES = [
 async def log_data(request: Request):
     data = await request.json()
 
-    # --- Extract data from frontend ---
+    
     method = data.get("method")
     entered_value = data.get("value")
     time_taken = data.get("timeTaken")
     participant_id = data.get("participant_id", "P01")  # can add input field later
     trial_number = data.get("trial_number") or None
 
-    # If frontend doesn’t send trial index, derive based on existing entries
+    
     if trial_number is None:
         trial_number = get_next_trial_number(participant_id)
 
     expected_value = EXPECTED_DATES[trial_number - 1] if 1 <= trial_number <= len(EXPECTED_DATES) else None
     correct = int(entered_value == expected_value)
 
-    # --- Store in dataframe ---
+
     row = {
         "timestamp": datetime.now().isoformat(),
         "participant_id": participant_id,
@@ -67,7 +67,7 @@ async def log_data(request: Request):
     else:
         df.to_csv(DATA_FILE, index=False)
 
-    # --- Optional live summary ---
+    
     all_data = pd.read_csv(DATA_FILE)
     summary = all_data.groupby("method")["timeTaken_ms"].mean().to_dict()
     accuracy = all_data.groupby("method")["correct"].mean().to_dict()

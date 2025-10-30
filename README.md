@@ -1,8 +1,11 @@
 # 464experiment
 
-running frontend command: python -m http.server 8000
+Open two powershells.
 
-running backend command: uvicorn main:app --reload --port 5000
+CD into respective folders.
 
-in browser: http://localhost:8000/
+Running backend command: python -m uvicorn main:app --reload
 
+Running frontend command: python -m http.server 5500
+
+Open in browser: http://localhost:5500/index.html

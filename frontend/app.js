@@ -5,7 +5,7 @@ let startTime;
 
 let participantId = prompt("Enter your Participant ID (e.g., P01):");
 if (!participantId) {
-  participantId = "P00"; // fallback in case user skips
+  participantId = "P00"; //default
 }
 
 
@@ -14,7 +14,6 @@ function switchMode(selectedMode) {
   currentDate = 1;
   renderInput();
 }
-
 
 
 function renderInput() {
@@ -57,7 +56,7 @@ function renderInput() {
 function logResult(method, value) {
   const timeTaken = performance.now() - startTime;
 
-  fetch("http://localhost:5000/api/log", {
+  fetch("http://localhost:8000/api/log", {
     method: "POST",
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify({ participant_id: participantId, method, value, timeTaken })
