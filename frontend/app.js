@@ -82,8 +82,15 @@ function submitCalendar() {
 function submitHybrid() {
   const textVal = document.getElementById('hybridInput').value;
   const calVal = document.getElementById('calendarInput').value;
+
+  let methodUsed;
+  if (calVal && !textVal) {
+    methodUsed = 'hybrid_calendar';  
+  } else if (textVal && !calVal) {
+    methodUsed = 'hybrid_manual';     
+  }
   const finalVal = calVal || textVal;
-  logResult('hybrid', finalVal);
+  logResult(methodUsed, finalVal);
 }
 
 renderInput();
